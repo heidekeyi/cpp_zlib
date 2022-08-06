@@ -7,7 +7,6 @@ void display(const ZLIB::complex &c) {
               << std::endl;
 }
 
-
 void test_construct() {
     ZLIB::complex c1;
     std::cout << "+++default construct+++" << std::endl;
@@ -102,13 +101,46 @@ void test_composite() {
     std::cout << "/=(3,-6)" << std::endl;
 }
 
+void test_compare() {
+    ZLIB::complex rhs{9, -9};
+    ZLIB::complex lhs{-9, 9};
+    std::cout << "*not equal test*" << std::endl;
+    std::cout << "+lhs+" << std::endl;
+    display(lhs);
+    std::cout << "-lhs-" << std::endl;
+    std::cout << "+rhs+" << std::endl;
+    display(rhs);
+    std::cout << "-rhs-" << std::endl;
+    if (lhs != rhs) {
+        std::cout << "lhs != rhs" << std::endl;
+    }else{
+        std::cout << "lhs == rhs" << std::endl;
+    }
+    std::cout << "*not equal test*" << std::endl;
+    lhs = rhs;
+    std::cout << "*equal test*" << std::endl;
+    std::cout << "+lhs+" << std::endl;
+    display(lhs);
+    std::cout << "-lhs-" << std::endl;
+    std::cout << "+rhs+" << std::endl;
+    display(rhs);
+    std::cout << "-rhs-" << std::endl;
+    if (lhs == rhs) {
+        std::cout << "lhs == rhs" << std::endl;
+    }else{
+        std::cout << "lhs != rhs" << std::endl;
+    }
+    std::cout << "*equal test*" << std::endl;
+}
+
 int main() {
     std::cout << "***没有考虑溢出,也没有考虑/0***" << std::endl;
 //    test_construct();
 //    test_set();
 //    test_binary();
 //    test_unary();
-    test_composite();
+//    test_composite();
+    test_compare();
     std::cout << "***没有考虑溢出,也没有考虑/0***" << std::endl;
     return 0;
 }
