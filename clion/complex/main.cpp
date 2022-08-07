@@ -1,5 +1,5 @@
 #include <iostream>
-#include "complex.h";
+#include "complex.h"
 
 void display(const ZLIB::complex &c) {
     std::cout << "real: " << c.real()

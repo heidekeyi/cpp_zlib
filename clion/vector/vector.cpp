@@ -11,7 +11,7 @@ namespace ZLIB {
         if (++pos >= sz) {
             sz *= 2;
             elem = new int[sz];
-            for (auto i = 0; i < ix; ++i) {
+            for (size_t i = 0; i < ix; ++i) {
                 elem[i] = e[i];
             }
             delete[]e;

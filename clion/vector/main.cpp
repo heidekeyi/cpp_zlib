@@ -7,13 +7,10 @@ void display(const ZLIB::vector &vec) {
         std::cout << vec[i];
         if (i + 1 < sz) {
             std::cout << ",";
-        } else {
-            std::cout << "]";
         }
     }
-    std::cout << std::endl;
+    std::cout << "]" << std::endl;
 }
-
 
 void test_construct() {
     ZLIB::vector v1(12);
@@ -27,6 +24,8 @@ void test_construct() {
 
 
 int main() {
+    std::cout << "下标越界没有检测" << std::endl;
     test_construct();
+    std::cout << "下标越界没有检测" << std::endl;
     return 0;
 }

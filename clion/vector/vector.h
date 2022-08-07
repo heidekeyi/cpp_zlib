@@ -21,8 +21,7 @@ namespace ZLIB {
         ~vector() { delete[]elem; }
 
     public:
-        int operator[](std::size_t i) { return elem[i]; }
-        int operator[](std::size_t i)const { return elem[i]; }
+        int operator[](std::size_t i) const { return elem[i]; }
 
         std::size_t size() const { return ix; }
 
