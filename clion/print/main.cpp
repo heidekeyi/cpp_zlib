@@ -15,6 +15,7 @@ int main() {
             .dec("0").dec("01").dec("10").dec("11")
             .reverse("hello world")
             .chicken()
-            .word("last week i went to company by bike");
+            .word("last week   i went to company by   bike")
+            .str(std::string{"last week   i went to company by   bike"}).str(" hello  world  Good  ");
     return 0;
 }

@@ -6,6 +6,7 @@
 #define PRINT_PRINT_H
 
 #include <iostream>
+#include <string>
 
 namespace ZLIB {
     class print {
@@ -36,7 +37,7 @@ namespace ZLIB {
 
         print &word(const char *ptr);
 
-        print &str(const std::string &s);
+        print &str(std::string str);
     };
 }
 

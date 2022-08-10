@@ -179,7 +179,39 @@ namespace ZLIB {
         return *this;
     }
 
-    print &print::str() {
-        return <#initializer#>;
+    print &print::str(std::string str) {
+        std::cout << str << std::endl;
+        int sz = static_cast<int>(str.size());
+        int mid = sz / 2;
+        for (int i = 0; i <= mid; ++i) {
+            char c = str[i];
+            size_t ix = sz - i - 1;
+            str[i] = str[ix];
+            str[ix] = c;
+        }
+        std::cout << str << std::endl;
+        auto pos = 0;
+        while (pos < sz) {
+            while (pos < sz && str[pos] == ' ') {
+                ++pos;
+            }
+            if (pos >= sz) {
+                break;
+            }
+            auto beg = pos;
+            while (pos < sz && str[pos] != ' ') {
+                ++pos;
+            }
+            auto end = pos - 1;
+            while (beg < end) {
+                auto c = str[beg];
+                str[beg] = str[end];
+                str[end] = c;
+                beg++;
+                end--;
+            }
+        }
+        std::cout << str << std::endl;
+        return *this;
     }
 }
