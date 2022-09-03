@@ -2,12 +2,11 @@
 // Created by 12131 on 2022/9/3.
 //
 
-#include "symbol_table_add.h"
+#include "symbol_table_mul.h"
 #include <iostream>
-#include "symbol_list.h"
 
 namespace ZLIB {
-    void SymbolTableAdd::display() {
+    void SymbolTableMul::display() {
         retrieve_table();
         for (int i = 0; i < valueSymbol.size(); ++i) {
             for (int j = 0; j < valueSymbol.size(); ++j) {
@@ -15,7 +14,7 @@ namespace ZLIB {
                     std::cout << '\n';
                     break;
                 }
-                std::cout << valueSymbol[j] << '+' << valueSymbol[i] << '=';
+                std::cout << valueSymbol[j] << '*' << valueSymbol[i] << '=';
                 auto &it = valueTable[i][j];
                 int index = static_cast<int>(it.size());
                 while (--index >= 0) {
@@ -27,7 +26,7 @@ namespace ZLIB {
         std::cout << std::endl;
     }
 
-    void SymbolTableAdd::retrieve_table() {
+    void SymbolTableMul::retrieve_table() {
         valueTable.clear();
         const auto &list = valueSymbolList.list();
         for (int i = 0; i < valueSymbol.size(); ++i) {
@@ -36,7 +35,7 @@ namespace ZLIB {
                 if (j > i) {
                     valueTable[i].push_back(std::vector<char>{});
                 } else {
-                    int pos = retrieve_index(valueSymbol[i]) + retrieve_index(valueSymbol[j]);
+                    int pos = retrieve_index(valueSymbol[i]) * retrieve_index(valueSymbol[j]);
                     valueTable[i].push_back(list[pos]);
                 }
             }
