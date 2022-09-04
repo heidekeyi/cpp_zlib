@@ -10,7 +10,7 @@
 namespace ZLIB {
     class SymbolTableMul : public SymbolTable {
     public:
-        void display() override;
+        std::vector<exp> retrieve_table_list() override;
 
     protected:
         void retrieve_table();

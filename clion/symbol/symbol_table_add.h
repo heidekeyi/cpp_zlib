@@ -8,12 +8,11 @@
 #include <string>
 #include <vector>
 #include "symbol_table.h"
+
 namespace ZLIB {
-    class SymbolTableAdd : public SymbolTable{
+    class SymbolTableAdd : public SymbolTable {
     public:
-        void display() override;
-    protected:
-        void retrieve_table();
+        std::vector<exp> retrieve_table_list() override;
     };
 }
 

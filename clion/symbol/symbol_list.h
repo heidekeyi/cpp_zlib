@@ -15,9 +15,11 @@ namespace ZLIB {
 
         SymbolList &symbol(const char *sym);
 
-        const std::vector<char> &symbol() const;
+        SymbolList &symbol(const std::vector<char> &sym);
 
-        int minNum() const;
+        [[nodiscard]] const std::vector<char> &symbol() const;
+
+        [[nodiscard]] int minNum() const;
 
         SymbolList &minNum(int n);
 

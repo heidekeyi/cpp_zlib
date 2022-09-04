@@ -7,28 +7,24 @@
 
 #include <string>
 #include <vector>
-#include "symbol_list.h"
-
+#include "symbol_base.h"
 
 namespace ZLIB {
-    class SymbolTable {
-    public:
-        SymbolTable &symbol(const char *sym);
-
-        SymbolTable &symbol(const std::string &sym);
-
-        const std::vector<char> &symbol() const;
-
-    public:
-        virtual void display() = 0;
-
+    class SymbolTable : public SymbolBase{
     protected:
-        int retrieve_index(char ch);
+        class exp {
+        public:
+            exp(char l, char r, char s, std::vector<char> v);
+            char lhs;
+            char rhs;
+            char sym;
+            std::vector<char> value;
+        } ;
 
-    protected:
-        std::vector<char> valueSymbol;
-        std::vector<std::vector<std::vector<char>>> valueTable;
-        SymbolList valueSymbolList;
+    public:
+        virtual std::vector<exp> retrieve_table_list() = 0;
+    public:
+        void display() override;
     };
 }
 

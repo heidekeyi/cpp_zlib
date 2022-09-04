@@ -9,4 +9,4 @@ add_executable(
         symbol_table_add.cpp symbol_table_add.h
         symbol_table.cpp symbol_table.h
         symbol_table_mul.cpp symbol_table_mul.h
-)
+        symbol_base.cpp symbol_base.h)

@@ -23,7 +23,7 @@ namespace ZLIB {
     void SymbolList::display() {
         list();
         int cnt = 0;
-        auto sz = valueSymbol.size() -1;
+        auto sz = valueSymbol.size() - 1;
         for (auto &it: valueList) {
             if (cnt && cnt % sz == 0) {
                 std::cout << '\n';
@@ -83,5 +83,11 @@ namespace ZLIB {
     const std::vector<std::vector<char>> &SymbolList::list() {
         retrieve_list();
         return valueList;
+    }
+
+    SymbolList &SymbolList::symbol(const std::vector<char> &sym) {
+        valueSymbol = sym;
+        valueSymbol.push_back(sym[0]);
+        return *this;
     }
 }

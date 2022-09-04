@@ -3,35 +3,28 @@
 //
 
 #include "symbol_table.h"
+#include <iostream>
+#include <utility>
 
-namespace ZLIB{
-    SymbolTable &SymbolTable::symbol(const char *sym) {
-        return symbol(std::string{sym});
-    }
-
-    SymbolTable &SymbolTable::symbol(const std::string &sym) {
-        valueSymbol.clear();
-        for (int i = 1; i < sym.size(); ++i) {
-            valueSymbol.push_back(sym[i]);
-        }
-        valueSymbolList = SymbolList{}.symbol(sym).minNum(108);
-        return *this;
-    }
-
-    const std::vector<char> &SymbolTable::symbol() const {
-        return valueSymbol;
-    }
-
-    int SymbolTable::retrieve_index(char ch) {
-        const auto &list = valueSymbolList.list();
-        int index = 0;
-        auto sz = list.size();
-        while (index < list.size()) {
-            if (ch == list[index][0]) {
-                break;
+namespace ZLIB {
+    void SymbolTable::display() {
+        int row = 1;
+        int col = 1;
+        for (auto &it: retrieve_table_list()) {
+            std::cout << it.rhs << it.sym << it.lhs << '=';
+            SymbolBase::display(it.value);
+            if (col >= row) {
+                col = 1;
+                ++row;
+                std::cout << '\n';
+            } else {
+                std::cout << '\t';
+                ++col;
             }
-            ++index;
         }
-        return index;
+        std::cout << std::endl;
     }
+
+    SymbolTable::exp::exp(char l, char r, char s, std::vector<char> v)
+            : lhs(l), rhs(r), sym(s), value(std::move(v)) {}
 }
