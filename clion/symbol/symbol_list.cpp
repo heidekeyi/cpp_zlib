@@ -6,88 +6,59 @@
 #include <iostream>
 
 namespace ZLIB {
-    int SymbolList::minNum() const {
-        return valueMinNum;
-    }
-
-    SymbolList &SymbolList::minNum(int n) {
-        valueMinNum = n;
-        n = static_cast<int>(valueSymbol.size());
-        n *= n;
-        if (valueMinNum < n) {
-            valueMinNum = n;
-        }
-        return *this;
-    }
-
     void SymbolList::display() {
-        list();
-        int cnt = 0;
-        auto sz = valueSymbol.size() - 1;
-        for (auto &it: valueList) {
-            if (cnt && cnt % sz == 0) {
+        display(108);
+    }
+
+    void SymbolList::display(int num) {
+        int cnt = 1;
+        auto size = symbol().size();
+        for (auto &it: retrieve_list(num)) {
+            SymbolBase::display(it);
+            if (cnt >= size) {
                 std::cout << '\n';
-            }
-            cnt++;
-            int index = static_cast<int>(it.size());
-            if (index > 0) {
-                while (--index >= 0) {
-                    std::cout << it[index];
-                }
+                cnt = 1;
+            } else {
                 std::cout << '\t';
+                ++cnt;
             }
         }
         std::cout << std::endl;
     }
 
-    const std::vector<char> &SymbolList::symbol() const {
-        return valueSymbol;
-    }
-
-    SymbolList &SymbolList::symbol(const std::string &sym) {
-        valueSymbol.clear();
-        for (auto ch: sym) {
-            valueSymbol.push_back(ch);
-        }
-        valueSymbol.push_back(sym[0]);
-        return *this;
-    }
-
-    SymbolList &SymbolList::symbol(const char *sym) {
-        return symbol(std::string{sym});
-    }
-
-    void SymbolList::retrieve_list() {
-        valueList.clear();
-        valueList.push_back(std::vector<char>{valueSymbol[0]});
-        while (valueList.size() < valueMinNum) {
-            valueList.push_back(valueList[valueList.size() - 1]);
-            add(0);
-        }
-    }
-
-    void SymbolList::add(int index) {
-        auto &it = valueList[valueList.size() - 1];
-        if (index >= it.size()) {
-            it.push_back(valueSymbol[1]);
+    void SymbolList::add(std::vector<char> &value, const std::vector<char> &sym, int index) {
+        //overflow, up 1 bit
+        if (index >= value.size()) {
+            value.push_back(sym[1]);
             return;
         }
         int pos = 0;
-        while (it[index] != valueSymbol[pos++]);
-        it[index] = valueSymbol[pos];
-        if (valueSymbol[pos] == valueSymbol[0]) {
-            add(index + 1);
+        //find next char
+        while (value[index] != sym[pos++]);
+        value[index] = sym[pos];
+        if (sym[pos] == sym[0]) {
+            add(value, sym, index + 1);
         }
     }
 
-    const std::vector<std::vector<char>> &SymbolList::list() {
-        retrieve_list();
-        return valueList;
-    }
-
-    SymbolList &SymbolList::symbol(const std::vector<char> &sym) {
-        valueSymbol = sym;
-        valueSymbol.push_back(sym[0]);
-        return *this;
+    std::vector<std::vector<char>> SymbolList::retrieve_list(int num) {
+        std::vector<char> sym = symbol();
+        auto sz = symbol().size();
+        sym.push_back(symbol()[0]);
+        auto size = sym.size();
+        size *= size;
+        if (size < num) {
+            size = num;
+        }
+        std::vector<std::vector<char>> list;
+        for (auto it: symbol()) {
+            list.push_back(std::vector<char>{it});
+        }
+        while (list.size() < size) {
+            auto value = list[list.size() - 1];
+            add(value, sym, 0);
+            list.push_back(value);
+        }
+        return list;
     }
 }

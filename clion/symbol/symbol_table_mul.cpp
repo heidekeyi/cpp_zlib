@@ -49,7 +49,9 @@ namespace ZLIB {
         }
         sym.push_back(symbol()[0]);
         std::vector<SymbolTable::exp> table_list;
-        auto list = SymbolList{}.symbol(symbol()).minNum(108).list();
+        SymbolList symbolList;
+        symbolList.symbol(symbol());
+        auto list = symbolList.retrieve_list();
         for (auto lhs: symbol()) {
             auto lhs_index = retrieve_index(lhs);
             if (!lhs_index) {
@@ -60,7 +62,7 @@ namespace ZLIB {
                 if (!rhs_index) {
                     continue;
                 }
-                table_list.emplace_back(lhs, rhs, '*', list[lhs_index* rhs_index]);
+                table_list.emplace_back(lhs, rhs, '*', list[lhs_index * rhs_index]);
                 if (lhs_index <= rhs_index) {
                     break;
                 }

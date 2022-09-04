@@ -18,6 +18,11 @@ namespace ZLIB {
         return *this;
     }
 
+    SymbolBase &SymbolBase::symbol(const std::vector<char> &sym) {
+        valueSymbol = sym;
+        return *this;
+    }
+
     const std::vector<char> &SymbolBase::symbol() const {
         return valueSymbol;
     }

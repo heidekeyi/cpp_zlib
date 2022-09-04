@@ -21,6 +21,8 @@ namespace ZLIB {
 
         SymbolBase &symbol(const std::string &sym);
 
+        SymbolBase &symbol(const std::vector<char> &sym);
+
         [[nodiscard]] const std::vector<char> &symbol() const;
 
     protected:

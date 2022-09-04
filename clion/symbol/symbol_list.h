@@ -7,36 +7,20 @@
 
 #include <string>
 #include <vector>
+#include "symbol_base.h"
 
 namespace ZLIB {
-    class SymbolList {
+    class SymbolList : public SymbolBase {
     public:
-        SymbolList &symbol(const std::string &sym);
-
-        SymbolList &symbol(const char *sym);
-
-        SymbolList &symbol(const std::vector<char> &sym);
-
-        [[nodiscard]] const std::vector<char> &symbol() const;
-
-        [[nodiscard]] int minNum() const;
-
-        SymbolList &minNum(int n);
-
-        const std::vector<std::vector<char>> &list();
+        std::vector<std::vector<char>> retrieve_list(int num = 108);
 
     public:
-        void display();
+        void display() override;
+
+        void display(int num = 108);
 
     protected:
-        void retrieve_list();
-
-        void add(int index);
-
-    protected:
-        std::vector<char> valueSymbol;
-        int valueMinNum;
-        std::vector<std::vector<char>> valueList;
+        void add(std::vector<char> &value, const std::vector<char> &sym, int index);
     };
 }
 

@@ -7,13 +7,10 @@
 
 namespace ZLIB {
     std::vector<SymbolTable::exp> SymbolTableAdd::retrieve_table_list() {
-        std::vector<char> sym{};
-        for (auto it: symbol()) {
-            sym.push_back(it);
-        }
-        sym.push_back(symbol()[0]);
         std::vector<SymbolTable::exp> table_list;
-        auto list = SymbolList{}.symbol(symbol()).minNum(108).list();
+        SymbolList symbolList;
+        symbolList.symbol(symbol());
+        auto list = symbolList.retrieve_list();
         for (auto lhs: symbol()) {
             auto lhs_index = retrieve_index(lhs);
             if (!lhs_index) {

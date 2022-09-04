@@ -1,12 +1,12 @@
 #include "symbol_list.h"
 #include "symbol_table_add.h"
 #include "symbol_table_mul.h"
-
+#include <iostream>
 namespace ZLIB {
     void test() {
-        const char *sym = "01234567";
+        const char *sym = "201";
         SymbolList symbolList;
-        symbolList.symbol(sym).minNum(1).display();
+        symbolList.symbol(sym).display();
         SymbolTableAdd symbolTableAdd;
         symbolTableAdd.symbol(sym).display();
         SymbolTableMul symbolTableMul;
