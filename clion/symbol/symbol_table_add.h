@@ -12,7 +12,8 @@
 namespace ZLIB {
     class SymbolTableAdd : public SymbolTable {
     public:
-        std::vector<exp> retrieve_table_list() override;
+        [[nodiscard]] Action retrieve_action()const override;
+//        std::vector<Expression> retrieve_table_list() override;
     };
 }
 

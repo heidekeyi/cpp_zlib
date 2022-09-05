@@ -4,7 +4,7 @@
 
 #include "symbol_table.h"
 #include <iostream>
-#include <utility>
+#include "symbol_list.h"
 
 namespace ZLIB {
     void SymbolTable::display() {
@@ -25,6 +25,45 @@ namespace ZLIB {
         std::cout << std::endl;
     }
 
-    SymbolTable::exp::exp(char l, char r, char s, std::vector<char> v)
+    SymbolTable::Expression::Expression(char l, char r, char s, std::vector<char> v)
             : lhs(l), rhs(r), sym(s), value(std::move(v)) {}
+
+    std::vector<SymbolTable::Expression> SymbolTable::retrieve_table_list() {
+        std::vector<SymbolTable::Expression> table_list;
+        SymbolList symbolList;
+        symbolList.symbol(symbol());
+        auto list = symbolList.retrieve_list();
+        for (auto lhs: symbol()) {
+            auto lhs_index = retrieve_index(lhs);
+            if (!lhs_index) {
+                continue;
+            }
+            for (auto rhs: symbol()) {
+                auto rhs_index = retrieve_index(rhs);
+                if (!rhs_index) {
+                    continue;
+                }
+                switch (retrieve_action()) {
+                    case Action::add:
+                        table_list.emplace_back(lhs, rhs, '+', list[lhs_index + rhs_index]);
+                        break;
+                    case Action::sub:
+                        std::cout << "sub is not impl" << std::endl;
+                        break;
+                    case Action::mul:
+                        table_list.emplace_back(lhs, rhs, '*', list[lhs_index * rhs_index]);
+                        break;
+                    case Action::div:
+                        std::cout << "div is not impl" << std::endl;
+                        break;
+                    default:
+                        break;
+                }
+                if (lhs_index <= rhs_index) {
+                    break;
+                }
+            }
+        }
+        return table_list;
+    }
 }

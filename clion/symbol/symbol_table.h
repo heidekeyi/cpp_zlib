@@ -10,19 +10,30 @@
 #include "symbol_base.h"
 
 namespace ZLIB {
-    class SymbolTable : public SymbolBase{
+    class SymbolTable : public SymbolBase {
     protected:
-        class exp {
+        class Expression {
         public:
-            exp(char l, char r, char s, std::vector<char> v);
+            Expression(char l, char r, char s, std::vector<char> v);
+
             char lhs;
             char rhs;
             char sym;
             std::vector<char> value;
-        } ;
+        };
+
+        enum class Action {
+            add,
+            sub,
+            mul,
+            div
+        };
+    protected:
+        [[nodiscard]] virtual Action retrieve_action() const = 0;
 
     public:
-        virtual std::vector<exp> retrieve_table_list() = 0;
+        std::vector<Expression> retrieve_table_list();
+
     public:
         void display() override;
     };
