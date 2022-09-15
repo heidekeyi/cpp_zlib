@@ -1,11 +1,15 @@
-#include <iostream>
-#include "accumulator.h"
-#include <vector>
-#include "sequence_table.h"
 
+#include "serial_sequence.h"
+#include <iostream>
 namespace ZLIB {
     void test() {
-        SequenceTable::display("201", 108);
+        SerialSequence sequence("abcdef", 39);
+        for(auto v: sequence.value()){
+            SerialSequence::display(v);
+            std::cout << std::endl;
+        }
+//        sequence.display();
+//        sequence.display(10);
     }
 }
 
