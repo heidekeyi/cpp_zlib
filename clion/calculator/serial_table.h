@@ -12,9 +12,9 @@ namespace ZLIB {
     public:
         SerialTable(const char *symbols);
 
-        std::vector<std::vector<char>> addition() const;
+        [[nodiscard]] std::vector<std::vector<char>> addition() const;
 
-        std::vector<std::vector<char>> multiplication() const;
+        [[nodiscard]] std::vector<std::vector<char>> multiplication() const;
 
         void display() const;
     private:

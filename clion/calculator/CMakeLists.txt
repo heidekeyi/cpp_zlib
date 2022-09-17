@@ -8,4 +8,4 @@ add_executable(calculator
         serial.cpp serial.h
         serial_ten.cpp serial_ten.h
         serial_sequence.cpp serial_sequence.h
-        serial_table.cpp serial_table.h)
+        serial_table.cpp serial_table.h serial_formula.cpp serial_formula.h)
