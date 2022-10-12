@@ -9,7 +9,7 @@ namespace ZLIB {
     SerialTable::SerialTable(const char *symbols) : m_symbols{symbols} {}
 
     std::vector<std::vector<char>> SerialTable::addition() const {
-        return ;
+        return {};
     }
 
     std::vector<std::vector<char>> SerialTable::multiplication() const {
