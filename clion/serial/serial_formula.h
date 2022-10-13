@@ -7,19 +7,22 @@
 
 #include <utility>
 #include <vector>
+#include <iostream>
+#include "serial_value.h"
 
 namespace ZLIB {
     class SerialFormula {
     public:
-        SerialFormula(char l, char o, char r, std::vector<char> v)
-                : lhs{l}, op{o}, rhs{r}, value{std::move(v)} {}
+        SerialFormula(char l, char o, char r, std::vector<char> v);
 
     public:
-        char rhs;
-        char lhs;
-        char op;
-        std::vector<char> value;
+        const char rhs;
+        const char lhs;
+        const char op;
+        const SerialValue serialValue;
     };
+
+    std::ostream &operator<<(std::ostream &out, const SerialFormula &ob);
 }
 
 #endif //SERIAL_SERIAL_FORMULA_H

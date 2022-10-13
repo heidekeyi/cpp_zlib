@@ -12,21 +12,21 @@ namespace ZLIB {
 
     std::vector<char> toVector(const std::vector<char> &str);
 
-    std::vector<std::vector<char>> sequenceOne(const std::vector<char> &symbols, size_t num);
+    std::vector<SerialValue> sequenceOne(const std::vector<char> &symbols, size_t num);
 
-    std::vector<std::vector<char>> sequenceAll(const std::vector<char> &symbols, size_t num);
+    std::vector<SerialValue> sequenceAll(const std::vector<char> &symbols, size_t num);
 
     void sequenceInc(std::vector<char> &vec, const std::vector<char> &symbols);
 
-    std::vector<std::vector<char>> SerialTable::sequence(const char *symbols, size_t num) {
+    std::vector<SerialValue> SerialTable::sequence(const char *symbols, size_t num) {
         return sequence(toVector(symbols), num);
     }
 
-    std::vector<std::vector<char>> SerialTable::sequence(const std::string &symbols, size_t num) {
+    std::vector<SerialValue> SerialTable::sequence(const std::string &symbols, size_t num) {
         return sequence(toVector(symbols), num);
     }
 
-    std::vector<std::vector<char>> SerialTable::sequence(const std::vector<char> &symbols, size_t num) {
+    std::vector<SerialValue> SerialTable::sequence(const std::vector<char> &symbols, size_t num) {
         auto sym = toVector(symbols);
         switch (sym.size()) {
             case 0:
@@ -111,20 +111,20 @@ namespace ZLIB {
         return vec;
     }
 
-    std::vector<std::vector<char>> sequenceOne(const std::vector<char> &symbols, size_t num) {
-        std::vector<std::vector<char>> v;
+    std::vector<SerialValue> sequenceOne(const std::vector<char> &symbols, size_t num) {
+        std::vector<SerialValue> v;
         for (int sz = 0; sz < num; ++sz) {
-            v.push_back({symbols[0]});
+            v.emplace_back(symbols[0]);
         }
         return v;
     }
 
-    std::vector<std::vector<char>> sequenceAll(const std::vector<char> &symbols, size_t num) {
+    std::vector<SerialValue> sequenceAll(const std::vector<char> &symbols, size_t num) {
         auto vec = sequenceOne(symbols, 1);
-        auto v = vec[0];
+        auto v = vec[0].value;
         while (--num > 0) {
             sequenceInc(v, symbols);
-            vec.push_back(v);
+            vec.emplace_back(v);
         }
         return vec;
     }
@@ -153,5 +153,23 @@ namespace ZLIB {
         if (pos >= vec.size()) {
             vec.push_back(symbols[1]);
         }
+    }
+
+    std::ostream &operator<<(std::ostream &os, const std::vector<SerialFormula> &o) {
+        auto times = 1;
+        auto cnt = 0;
+        for (const auto &item: o) {
+            os << item;
+            if (cnt < times) {
+                os << '\t';
+                ++cnt;
+            } else {
+                os << '\n';
+                cnt = 0;
+                ++times;
+            }
+        }
+        os << std::endl;
+        return os;
     }
 }
