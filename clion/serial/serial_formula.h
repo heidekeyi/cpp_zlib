@@ -16,13 +16,13 @@ namespace ZLIB {
         SerialFormula(char l, char o, char r, std::vector<char> v);
 
     public:
-        const char rhs;
         const char lhs;
+        const char rhs;
         const char op;
         const SerialValue serialValue;
     };
 
-    std::ostream &operator<<(std::ostream &out, const SerialFormula &ob);
+    std::ostream &operator<<(std::ostream &os, const SerialFormula &o);
 }
 
 #endif //SERIAL_SERIAL_FORMULA_H

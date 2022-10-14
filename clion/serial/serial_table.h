@@ -12,23 +12,23 @@
 namespace ZLIB {
     class SerialTable {
     public:
-        static std::vector<SerialValue> sequence(const char *symbols, size_t num);
+        explicit SerialTable(const char *s);
 
-        static std::vector<SerialValue> sequence(const std::string &symbols, size_t num);
+        explicit SerialTable(const std::string &s);
 
-        static std::vector<SerialValue> sequence(const std::vector<char> &symbols, size_t num);
+        explicit SerialTable(const std::vector<char> &s);
 
-        static std::vector<SerialFormula> addition(const char *symbols);
+        SerialTable(const SerialTable &rhs) = default;
 
-        static std::vector<SerialFormula> addition(const std::string &symbols);
+    public:
+        std::vector<SerialValue> sequence(size_t num);
 
-        static std::vector<SerialFormula> addition(const std::vector<char> &symbols);
+        std::vector<SerialFormula> addition();
 
-        static std::vector<SerialFormula> multiplication(const char *symbols);
+        std::vector<SerialFormula> multiplication();
 
-        static std::vector<SerialFormula> multiplication(const std::string &symbols);
-
-        static std::vector<SerialFormula> multiplication(const std::vector<char> &symbols);
+    private:
+        const std::vector<char> symbols;
     };
 
     std::ostream &operator<<(std::ostream &os, const std::vector<SerialFormula> &o);

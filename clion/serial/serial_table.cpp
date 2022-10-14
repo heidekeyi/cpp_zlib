@@ -6,11 +6,11 @@
 #include <exception>
 
 namespace ZLIB {
-    std::vector<char> toVector(const char *str);
+    std::vector<char> convert(const char *s);
 
-    std::vector<char> toVector(const std::string &str);
+    std::vector<char> convert(const std::string &str);
 
-    std::vector<char> toVector(const std::vector<char> &str);
+    std::vector<char> convert(const std::vector<char> &s);
 
     std::vector<SerialValue> sequenceOne(const std::vector<char> &symbols, size_t num);
 
@@ -18,37 +18,20 @@ namespace ZLIB {
 
     void sequenceInc(std::vector<char> &vec, const std::vector<char> &symbols);
 
-    std::vector<SerialValue> SerialTable::sequence(const char *symbols, size_t num) {
-        return sequence(toVector(symbols), num);
-    }
-
-    std::vector<SerialValue> SerialTable::sequence(const std::string &symbols, size_t num) {
-        return sequence(toVector(symbols), num);
-    }
-
-    std::vector<SerialValue> SerialTable::sequence(const std::vector<char> &symbols, size_t num) {
-        auto sym = toVector(symbols);
-        switch (sym.size()) {
+    std::vector<SerialValue> SerialTable::sequence(size_t num) {
+        switch (symbols.size()) {
             case 0:
                 return {};
             case 1:
-                return sequenceOne(sym, num);
+                return sequenceOne(symbols, num);
             default:
-                return sequenceAll(sym, num);
+                return sequenceAll(symbols, num);
         }
     }
 
-    std::vector<SerialFormula> SerialTable::addition(const char *symbols) {
-        return addition(toVector(symbols));
-    }
-
-    std::vector<SerialFormula> SerialTable::addition(const std::string &symbols) {
-        return addition(toVector(symbols));
-    }
-
     std::vector<SerialFormula> SerialTable::addition(const std::vector<char> &symbols) {
-        auto sym = toVector(symbols);
-        auto list = sequence(sym, sym.size() * sym.size() + 1);
+        auto sym = convert(symbols);
+        auto list = sequence(sym.size() * sym.size() + 1);
         std::vector<SerialFormula> vec;
         for (int i = 0; i < sym.size(); ++i) {
             for (int j = 0; j <= i; ++j) {
@@ -59,15 +42,15 @@ namespace ZLIB {
     }
 
     std::vector<SerialFormula> SerialTable::multiplication(const char *symbols) {
-        return multiplication(toVector(symbols));
+        return multiplication(convert(symbols));
     }
 
     std::vector<SerialFormula> SerialTable::multiplication(const std::string &symbols) {
-        return multiplication(toVector(symbols));
+        return multiplication(convert(symbols));
     }
 
     std::vector<SerialFormula> SerialTable::multiplication(const std::vector<char> &symbols) {
-        auto sym = toVector(symbols);
+        auto sym = convert(symbols);
         auto list = sequence(sym, sym.size() * sym.size() + 1);
         std::vector<SerialFormula> vec;
         for (int i = 0; i < sym.size(); ++i) {
@@ -78,7 +61,7 @@ namespace ZLIB {
         return vec;
     }
 
-    std::vector<char> toVector(const char *str) {
+    std::vector<char> convert(const char *str) {
         std::vector<char> v;
         while (*str) {
             v.push_back(*str);
@@ -87,7 +70,7 @@ namespace ZLIB {
         return v;
     }
 
-    std::vector<char> toVector(const std::string &str) {
+    std::vector<char> convert(const std::string &str) {
         std::vector<char> v;
         for (auto c: str) {
             v.push_back(c);
@@ -95,7 +78,7 @@ namespace ZLIB {
         return v;
     }
 
-    std::vector<char> toVector(const std::vector<char> &str) {
+    std::vector<char> convert(const std::vector<char> &str) {
         std::vector<char> vec;
         for (auto item: str) {
             auto status = true;

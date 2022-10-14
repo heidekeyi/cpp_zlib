@@ -5,6 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(serial
         main.cpp
-        serial_table.cpp serial_table.h
+        serial_symbols.cpp serial_symbols.h
+        serial_value.cpp serial_value.h
         serial_formula.cpp serial_formula.h
-        serial_value.cpp serial_value.h)
+        #        serial_table.cpp serial_table.h
+
+        #       serial_sequence.cpp serial_sequence.h
+
+        )

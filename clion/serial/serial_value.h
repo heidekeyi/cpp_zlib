@@ -6,18 +6,24 @@
 #define SERIAL_SERIAL_VALUE_H
 
 #include <vector>
+#include <string>
 #include <iostream>
 
 namespace ZLIB {
     class SerialValue {
     public:
+        static std::vector<char> convert(const std::string &s);
+    public:
         explicit SerialValue(std::vector<char> v);
 
-        explicit SerialValue(char ch);
+        explicit SerialValue(const std::string &v);
 
-        SerialValue(const SerialValue &rhs) = default;
+        explicit SerialValue(char v);
 
     public:
+        [[nodiscard]] const std::vector<char> &retrieve() const;
+
+    private:
         const std::vector<char> value;
     };
 
