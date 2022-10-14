@@ -15,23 +15,42 @@ namespace ZLIB {
     public:
         explicit SerialSequence(const char *s);
 
+        SerialSequence(const char *s, size_t n);
+
         explicit SerialSequence(const std::string &s);
+
+        SerialSequence(const std::string &s, size_t n);
 
         explicit SerialSequence(const std::vector<char> &s);
 
-    protected:
-        [[nodiscard]] std::vector<SerialValue> all(size_t num) const;
+        SerialSequence(const std::vector<char> &s, size_t n);
 
-        [[nodiscard]] std::vector<SerialValue> one(size_t num) const;
+    protected:
+        [[nodiscard]] std::vector<SerialValue> all(size_t n) const;
+
+        [[nodiscard]] std::vector<SerialValue> one(size_t n) const;
 
         void inc(std::vector<char> &vec) const;
 
     public:
-        [[nodiscard]] std::vector<SerialValue> retrieve(size_t num) const;
+        [[nodiscard]] std::vector<SerialValue> table() const;
+
+        [[nodiscard]] const SerialSymbols &symbols() const;
+
+        SerialSequence &symbols(const char *s);
+
+        SerialSequence &symbols(const std::string &s);
+
+        SerialSequence &symbols(const std::vector<char> &s);
+
+        SerialSequence &number(size_t n);
 
     private:
-        const SerialSymbols serialSymbols;
+        SerialSymbols serialSymbols;
+        size_t num;
     };
+
+    std::ostream &operator<<(std::ostream &os, const SerialSequence &o);
 }
 
 #endif //SERIAL_SERIAL_SEQUENCE_H

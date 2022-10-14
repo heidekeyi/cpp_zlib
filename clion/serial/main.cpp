@@ -5,6 +5,7 @@
 #include "serial_formula.h"
 #include "serial_value.h"
 #include "serial_symbols.h"
+#include "serial_sequence.h"
 
 namespace ZLIB {
     void test();
@@ -62,9 +63,23 @@ namespace ZLIB {
                   << std::endl;
     }
 
+    void test_sequence() {
+        SerialSequence serialSequence1{"1"};
+        SerialSequence serialSequence2{std::string{'0', '1'}};
+        SerialSequence serialSequence3{std::vector<char>{'0', '1', '0', '1', '1'}};
+        SerialSequence serialSequence11{"0123456789"};
+        std::cout << serialSequence1
+                  << serialSequence2
+                  << serialSequence3
+                  << serialSequence11
+                  << serialSequence2.number(18)
+                  << std::endl;
+    }
+
     void test() {
         test_symbols();
         test_value();
         test_formula();
+        test_sequence();
     }
 }

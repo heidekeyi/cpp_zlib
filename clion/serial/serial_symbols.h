@@ -30,7 +30,7 @@ namespace ZLIB {
         [[nodiscard]] const std::vector<char> &retrieve() const;
 
     private:
-        const std::vector<char> value;
+        std::vector<char> value;
     };
 
     std::ostream &operator<<(std::ostream &os, const SerialSymbols &o);
