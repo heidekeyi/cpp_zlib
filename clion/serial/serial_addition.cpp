@@ -5,6 +5,8 @@
 #include "serial_addition.h"
 
 namespace ZLIB {
+    SerialAddition::SerialAddition(const SerialSymbols &s)
+            : SerialTable{s} {}
 
     SerialAddition::SerialAddition(const std::vector<char> &s)
             : SerialTable{s} {}

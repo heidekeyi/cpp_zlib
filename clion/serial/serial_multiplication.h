@@ -10,6 +10,8 @@
 namespace ZLIB {
     class SerialMultiplication : public SerialTable {
     public:
+        explicit SerialMultiplication(const SerialSymbols &s);
+
         explicit SerialMultiplication(const std::vector<char> &s);
 
         explicit SerialMultiplication(const std::string &s);

@@ -21,11 +21,13 @@ namespace ZLIB {
 
         explicit SerialValue(char v);
 
+        SerialValue() = default;
+
     public:
         [[nodiscard]] const std::vector<char> &retrieve() const;
 
     private:
-        const std::vector<char> value;
+        std::vector<char> value;
     };
 
     std::ostream &operator<<(std::ostream &os, const SerialValue &ob);

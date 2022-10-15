@@ -18,6 +18,8 @@ namespace ZLIB {
 
         explicit SerialAddition(const std::vector<char> &s);
 
+        explicit SerialAddition(const SerialSymbols &s);
+
     public:
         [[nodiscard]] std::vector<SerialFormula> table() const override;
     };

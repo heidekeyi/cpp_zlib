@@ -5,6 +5,8 @@
 #include "serial_multiplication.h"
 
 namespace ZLIB {
+    SerialMultiplication::SerialMultiplication(const SerialSymbols &s)
+            : SerialTable{s} {}
 
     SerialMultiplication::SerialMultiplication(const std::vector<char> &s)
             : SerialTable{s} {}

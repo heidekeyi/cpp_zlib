@@ -14,4 +14,4 @@ add_executable(serial
         serial_addition.cpp serial_addition.h
         serial_multiplication.cpp serial_multiplication.h
 
-        )
+        serial_decimal.cpp serial_decimal.h serial.cpp serial.h exception_table.cpp exception_table.h exception_value.cpp exception_value.h)

@@ -7,6 +7,7 @@
 #include "serial_sequence.h"
 #include "serial_addition.h"
 #include "serial_multiplication.h"
+#include "serial_decimal.h"
 
 namespace ZLIB {
     void test();
@@ -101,12 +102,30 @@ namespace ZLIB {
                   << std::endl;
     }
 
-    void test() {
+    void test_components() {
         test_symbols();
         test_value();
         test_formula();
         test_sequence();
         test_addition();
         test_multiplication();
+    }
+
+    void test_exception_value() {
+
+    }
+
+    void test_exception() {
+        test_exception_value();
+    }
+
+    void test_decimal() {
+        SerialDecimal serialDecimal;
+    }
+
+    void test() {
+        test_components();
+        test_decimal();
+        test_exception();
     }
 }

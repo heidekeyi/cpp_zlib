@@ -15,6 +15,9 @@ namespace ZLIB {
     SerialTable::SerialTable(const std::vector<char> &s)
             : SerialList(s) {}
 
+    SerialTable::SerialTable(const SerialSymbols &s)
+            : SerialList(s) {}
+
     SerialSequence SerialTable::sequence() const {
         auto sz = symbols().retrieve().size();
         return SerialSequence(symbols().retrieve(), sz * sz + 1);

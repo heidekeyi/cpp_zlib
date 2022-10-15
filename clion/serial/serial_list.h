@@ -18,12 +18,16 @@ namespace ZLIB {
 
         explicit SerialList(const std::vector<char> &s);
 
+        explicit SerialList(SerialSymbols s);
+
     public:
         SerialList &symbols(const char *s);
 
         SerialList &symbols(const std::string &s);
 
         SerialList &symbols(const std::vector<char> &s);
+
+        SerialList &symbols(const SerialSymbols &s);
 
         [[nodiscard]] const SerialSymbols &symbols() const;
 

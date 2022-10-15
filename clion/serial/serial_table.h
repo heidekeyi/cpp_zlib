@@ -21,6 +21,8 @@ namespace ZLIB {
 
         explicit SerialTable(const std::vector<char> &s);
 
+        explicit SerialTable(const SerialSymbols &s);
+
     public:
         [[nodiscard]] virtual std::vector<SerialFormula> table() const = 0;
 
