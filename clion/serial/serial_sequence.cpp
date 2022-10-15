@@ -5,35 +5,20 @@
 #include "serial_sequence.h"
 
 namespace ZLIB {
-    SerialSequence::SerialSequence(const char *s)
-            : serialSymbols{s}, num{0} {
-        auto sz = serialSymbols.retrieve().size();
-        num = sz * sz;
-    }
-
-    SerialSequence::SerialSequence(const std::string &s)
-            : serialSymbols{s}, num{s.size() * s.size()} {
-        auto sz = serialSymbols.retrieve().size();
-        num = sz * sz;
-    }
-
-    SerialSequence::SerialSequence(const std::vector<char> &s)
-            : serialSymbols{s}, num{0} {
-        auto sz = serialSymbols.retrieve().size();
-        num = sz * sz;
-    }
-
     SerialSequence::SerialSequence(const char *s, size_t n)
-            : serialSymbols{s}, num{n} {}
+            : SerialList{s}, num{n} {}
 
     SerialSequence::SerialSequence(const std::string &s, size_t n)
-            : serialSymbols{s}, num{n} {}
+            : SerialList{s}, num{n} {}
 
     SerialSequence::SerialSequence(const std::vector<char> &s, size_t n)
-            : serialSymbols{s}, num{n} {}
+            : SerialList{s}, num{n} {}
 
     std::vector<SerialValue> SerialSequence::table() const {
-        switch (serialSymbols.retrieve().size()) {
+        if (num == 0) {
+            return {};
+        }
+        switch (symbols().retrieve().size()) {
             case 0:
                 return {};
             case 1:
@@ -44,18 +29,20 @@ namespace ZLIB {
     }
 
     std::vector<SerialValue> SerialSequence::one(size_t n) const {
-        std::vector<SerialValue> v;
-        for (int sz = 0; sz < n; ++sz) {
-            v.emplace_back(serialSymbols.retrieve()[0]);
+        std::vector<SerialValue> vec;
+        auto v = SerialValue{""}.retrieve();
+        auto ch = symbols().retrieve()[0];
+        for (auto sz = 0; sz < n; ++sz) {
+            v.emplace_back(ch);
+            vec.emplace_back(v);
         }
-        return v;
+        return vec;
     }
 
     std::vector<SerialValue> SerialSequence::all(size_t n) const {
-        auto symbols = serialSymbols.retrieve();
         auto vec = one(1);
         auto v = vec[0].retrieve();
-        while (--n > 0) {
+        for (auto sz = 0; sz < n; ++sz) {
             inc(v);
             vec.emplace_back(v);
         }
@@ -64,48 +51,29 @@ namespace ZLIB {
 
     void SerialSequence::inc(std::vector<char> &vec) const {
         auto pos = 0;
-        auto symbols = serialSymbols.retrieve();
+        const auto &sym = symbols().retrieve();
         while (pos < vec.size()) {
             auto index = 0;
-            while (index < symbols.size()) {
+            while (index < sym.size()) {
 //                compare and index to next
-                if (symbols[index++] == vec[pos]) {
+                if (sym[index++] == vec[pos]) {
                     break;
                 }
             }
-            if (index >= symbols.size()) {
+            if (index >= sym.size()) {
 //                set pos with first element
-                vec[pos] = symbols[0];
+                vec[pos] = sym[0];
                 ++pos;
             } else {
 //                pos inc
-                vec[pos] = symbols[index];
+                vec[pos] = sym[index];
                 break;
             }
         }
 //        last pos inc
         if (pos >= vec.size()) {
-            vec.push_back(symbols[1]);
+            vec.push_back(sym[1]);
         }
-    }
-
-    const SerialSymbols &SerialSequence::symbols() const {
-        return serialSymbols;
-    }
-
-    SerialSequence &SerialSequence::symbols(const char *s) {
-        serialSymbols = SerialSymbols{s};
-        return *this;
-    }
-
-    SerialSequence &SerialSequence::symbols(const std::string &s) {
-        serialSymbols = SerialSymbols{s};
-        return *this;
-    }
-
-    SerialSequence &SerialSequence::symbols(const std::vector<char> &s) {
-        serialSymbols = SerialSymbols{s};
-        return *this;
     }
 
     SerialSequence &SerialSequence::number(size_t n) {
@@ -114,9 +82,10 @@ namespace ZLIB {
     }
 
     std::ostream &operator<<(std::ostream &os, const SerialSequence &o) {
-        const auto &s = o.symbols();
-        os << "symbols: " << s << '\n';
-        auto sz = s.retrieve().size();
+        os << "++++++++++++\n";
+        const auto &sym = o.symbols();
+        os << "symbols: " << sym << '\n';
+        auto sz = sym.retrieve().size();
         auto cnt = 1;
         for (const auto &it: o.table()) {
             if (cnt >= sz) {
@@ -127,7 +96,7 @@ namespace ZLIB {
                 ++cnt;
             }
         }
-        os << std::endl;
+        os << "\n------------" << std::endl;
         return os;
     }
 }

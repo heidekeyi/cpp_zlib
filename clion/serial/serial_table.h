@@ -7,10 +7,13 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 #include "serial_formula.h"
+#include "serial_list.h"
+#include "serial_sequence.h"
 
 namespace ZLIB {
-    class SerialTable {
+    class SerialTable : public SerialList {
     public:
         explicit SerialTable(const char *s);
 
@@ -18,21 +21,12 @@ namespace ZLIB {
 
         explicit SerialTable(const std::vector<char> &s);
 
-        SerialTable(const SerialTable &rhs) = default;
-
     public:
-        std::vector<SerialValue> sequence(size_t num);
+        [[nodiscard]] virtual std::vector<SerialFormula> table() const = 0;
 
-        std::vector<SerialFormula> addition();
-
-        std::vector<SerialFormula> multiplication();
-
-    private:
-        const std::vector<char> symbols;
+        [[nodiscard]] SerialSequence sequence() const;
     };
 
-    std::ostream &operator<<(std::ostream &os, const std::vector<SerialFormula> &o);
-
-    std::ostream &operator<<(std::ostream &os, const std::vector<SerialValue> &o);
+    std::ostream &operator<<(std::ostream &os, const SerialTable &o);
 }
 #endif //SERIAL_SERIAL_TABLE_H

@@ -9,21 +9,16 @@
 #include <string>
 #include "serial_value.h"
 #include "serial_symbols.h"
+#include "serial_list.h"
 
 namespace ZLIB {
-    class SerialSequence {
+    class SerialSequence : public SerialList {
     public:
-        explicit SerialSequence(const char *s);
+        explicit SerialSequence(const char *s, size_t n = 0);
 
-        SerialSequence(const char *s, size_t n);
+        explicit SerialSequence(const std::string &s, size_t n = 0);
 
-        explicit SerialSequence(const std::string &s);
-
-        SerialSequence(const std::string &s, size_t n);
-
-        explicit SerialSequence(const std::vector<char> &s);
-
-        SerialSequence(const std::vector<char> &s, size_t n);
+        explicit SerialSequence(const std::vector<char> &s, size_t n = 0);
 
     protected:
         [[nodiscard]] std::vector<SerialValue> all(size_t n) const;
@@ -35,18 +30,9 @@ namespace ZLIB {
     public:
         [[nodiscard]] std::vector<SerialValue> table() const;
 
-        [[nodiscard]] const SerialSymbols &symbols() const;
-
-        SerialSequence &symbols(const char *s);
-
-        SerialSequence &symbols(const std::string &s);
-
-        SerialSequence &symbols(const std::vector<char> &s);
-
         SerialSequence &number(size_t n);
 
     private:
-        SerialSymbols serialSymbols;
         size_t num;
     };
 

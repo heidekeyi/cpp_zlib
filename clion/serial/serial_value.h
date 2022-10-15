@@ -13,6 +13,7 @@ namespace ZLIB {
     class SerialValue {
     public:
         static std::vector<char> convert(const std::string &s);
+
     public:
         explicit SerialValue(std::vector<char> v);
 

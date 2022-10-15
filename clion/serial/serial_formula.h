@@ -15,6 +15,8 @@ namespace ZLIB {
     public:
         SerialFormula(char l, char o, char r, std::vector<char> v);
 
+        SerialFormula(char l, char o, char r, SerialValue v);
+
     public:
         const char lhs;
         const char rhs;

@@ -1,11 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "serial_table.h"
 #include "serial_formula.h"
 #include "serial_value.h"
 #include "serial_symbols.h"
 #include "serial_sequence.h"
+#include "serial_addition.h"
+#include "serial_multiplication.h"
 
 namespace ZLIB {
     void test();
@@ -64,15 +65,39 @@ namespace ZLIB {
     }
 
     void test_sequence() {
-        SerialSequence serialSequence1{"1"};
-        SerialSequence serialSequence2{std::string{'0', '1'}};
-        SerialSequence serialSequence3{std::vector<char>{'0', '1', '0', '1', '1'}};
+        SerialSequence serialSequence1{"1", 3};
+        SerialSequence serialSequence2{std::string{'0', '1'}, 3};
+        SerialSequence serialSequence3{std::vector<char>{'0', '1', '0', '1', '1'}, 3};
         SerialSequence serialSequence11{"0123456789"};
+        SerialSequence serialSequence111{"0123456789", 120};
         std::cout << serialSequence1
                   << serialSequence2
                   << serialSequence3
                   << serialSequence11
                   << serialSequence2.number(18)
+                  << serialSequence111
+                  << std::endl;
+    }
+
+    void test_addition() {
+        SerialAddition serialAddition1{""};
+        SerialAddition serialAddition2{"1"};
+        SerialAddition serialAddition3{"0123456789"};
+        std::cout << serialAddition1
+                  << serialAddition2
+                  << serialAddition3
+                  << std::endl;
+    }
+
+    void test_multiplication() {
+        SerialMultiplication serialMultiplication1{""};
+        SerialMultiplication serialMultiplication2{"0"};
+        SerialMultiplication serialMultiplication3{"01"};
+        SerialMultiplication serialMultiplication11{"0123456789"};
+        std::cout << serialMultiplication1
+                  << serialMultiplication2
+                  << serialMultiplication3
+                  << serialMultiplication11
                   << std::endl;
     }
 
@@ -81,5 +106,7 @@ namespace ZLIB {
         test_value();
         test_formula();
         test_sequence();
+        test_addition();
+        test_multiplication();
     }
 }

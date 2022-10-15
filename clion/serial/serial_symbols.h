@@ -12,7 +12,7 @@
 
 namespace ZLIB {
     class SerialSymbols {
-    public:
+    private:
         static std::vector<char> convert(const char *s);
 
         static std::vector<char> convert(const std::vector<char> &s);
