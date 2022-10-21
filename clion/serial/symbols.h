@@ -12,35 +12,22 @@
 namespace ZLIB {
     class Symbols {
     public:
-        explicit Symbols(const char *s);
-
         explicit Symbols(const std::string &s);
 
-        explicit Symbols(const std::vector<char> &s);
-
     public:
-        void symbols(const char *s);
-
         void symbols(const std::string &s);
 
-        void symbols(const std::vector<char> &s);
-
-        [[nodiscard]] const std::vector<char> &symbols() const;
+        [[nodiscard]]  std::string symbols() const;
 
     private:
-        void init(const std::string &s);
-
-        void init(const std::vector<char> &s);
-
-    private:
-        void visibility();
-
         void length();
 
         void unique();
 
+        void visibility();
+
     private:
-        std::vector<char> m_symbols;
+        std::string m_symbols;
     };
 
     std::ostream &operator<<(std::ostream &os, const Symbols &o);

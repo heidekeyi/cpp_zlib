@@ -13,14 +13,6 @@ namespace {
     using ZLIB::Symbols;
     using ZLIB::Message;
 
-    void length(const char *s) {
-        try {
-            Symbols symbols(s);
-        } catch (const Message &o) {
-            std::cout << "const char *: " << o << std::endl;
-        }
-    }
-
     void length(const std::string &s) {
         try {
             Symbols symbols(s);
@@ -29,31 +21,15 @@ namespace {
         }
     }
 
-    void length(const std::vector<char> &s) {
-        try {
-            Symbols symbols(s);
-        } catch (const Message &o) {
-            std::cout << "vector<char>: " << o << std::endl;
-        }
-    }
-
     void length() {
-        length("0");
-        length("abcdefghijklmnopqrstuvwxyz0123456789");
         length(std::string{"0"});
         length(std::string{"abcdefghijklmnopqrstuvwxyz0123456789"});
-        length(std::vector<char>{'0'});
-        length(std::vector<char>{
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-                'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-                'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-        });
     }
 
     void unique() {
-        const char *s = "";
+        std::string s{};
         try {
-            s = "11";
+            s = std::string {};
             Symbols symbols(s);
         } catch (const Message &o) {
             std::cout << s << ": " << o << std::endl;

@@ -6,47 +6,19 @@
 #include "message.h"
 
 namespace ZLIB {
-    Symbols::Symbols(const char *s) {
-        init(std::string{s});
-    }
-
     Symbols::Symbols(const std::string &s) {
-        init(s);
-    }
-
-    Symbols::Symbols(const std::vector<char> &s) {
-        init(s);
-    }
-
-    void Symbols::symbols(const char *s) {
-        init(s);
+        symbols(s);
     }
 
     void Symbols::symbols(const std::string &s) {
-        init(s);
-    }
-
-    void Symbols::symbols(const std::vector<char> &s) {
-        init(s);
-    }
-
-    const std::vector<char> &Symbols::symbols() const {
-        return m_symbols;
-    }
-
-    void Symbols::init(const std::string &s) {
-        std::vector<char> v;
-        for (auto c: s) {
-            v.push_back(c);
-        }
-        init(v);
-    }
-
-    void Symbols::init(const std::vector<char> &s) {
         m_symbols = s;
         length();
         unique();
         visibility();
+    }
+
+    std::string Symbols::symbols() const {
+        return m_symbols;
     }
 
     void Symbols::visibility() {
