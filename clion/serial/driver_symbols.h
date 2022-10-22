@@ -9,7 +9,7 @@
 #include "symbols.h"
 #include "message.h"
 
-namespace {
+namespace symbols{
     using ZLIB::Symbols;
     using ZLIB::Message;
 
@@ -29,7 +29,7 @@ namespace {
     void unique() {
         std::string s{};
         try {
-            s = std::string {};
+            s = std::string{};
             Symbols symbols(s);
         } catch (const Message &o) {
             std::cout << s << ": " << o << std::endl;
@@ -46,6 +46,12 @@ namespace {
         }
     }
 
+    void has() {
+        Symbols symbols{std::string{"01"}};
+        std::cout << (symbols.has('1') ? "" : "not") << " has" << std::endl;
+        std::cout << (symbols.has('2') ? "" : "not") << " has" << std::endl;
+    }
+
     int driver_symbols() {
         std::cout << "+++++++++" << std::endl;
         length();
@@ -56,10 +62,12 @@ namespace {
         std::cout << "+++++++++" << std::endl;
         visibility();
         std::cout << "---------" << std::endl;
+        std::cout << "+++++++++" << std::endl;
+        has();
+        std::cout << "---------" << std::endl;
         return 0;
     }
-
-    auto v = driver_symbols();
+    auto _ = driver_symbols();
 }
 
 

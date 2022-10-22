@@ -6,7 +6,7 @@
 
 namespace ZLIB {
     Symbols Decimal::symbols() const {
-        return Symbols{"0123456789"};
+        return Symbols{std::string{"0123456789"}};
     }
 
     Decimal Decimal::operator+(const Decimal &rhs) {

@@ -19,6 +19,8 @@ namespace ZLIB {
 
         [[nodiscard]]  std::string symbols() const;
 
+        [[nodiscard]] bool has(char ch) const;
+
     private:
         void length();
 

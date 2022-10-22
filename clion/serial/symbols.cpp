@@ -4,6 +4,7 @@
 
 #include "symbols.h"
 #include "message.h"
+#include <algorithm>
 
 namespace ZLIB {
     Symbols::Symbols(const std::string &s) {
@@ -24,17 +25,17 @@ namespace ZLIB {
     void Symbols::visibility() {
         for (auto c: m_symbols) {
             if (c < 0x20 || c > 0x7e) {
-                throw Message{"invisibility is found in symbols"};
+                throw Message{"message: char of invisibility is found"};
             }
         }
     }
 
     void Symbols::length() {
         if (m_symbols.size() < 2) {
-            throw Message{"length of symbols is too short"};
+            throw Message{"message: length of symbols is too short"};
         }
         if (m_symbols.size() > 32) {
-            throw Message{"length of symbols is too long"};
+            throw Message{"message: length of symbols is too long"};
         }
     }
 
@@ -42,10 +43,18 @@ namespace ZLIB {
         for (int i = 0; i < m_symbols.size(); ++i) {
             for (int j = i + 1; j < m_symbols.size(); ++j) {
                 if (m_symbols[i] == m_symbols[j]) {
-                    throw Message{"same char is found in symbols"};
+                    throw Message{"message: same char is found"};
                 }
             }
         }
+    }
+
+    bool Symbols::has(char elem) const {
+        return std::ranges::any_of(
+                m_symbols.begin(),
+                m_symbols.end(),
+                [elem](char ch) { return ch == elem; }
+        );
     }
 
     std::ostream &operator<<(std::ostream &os, const Symbols &o) {
