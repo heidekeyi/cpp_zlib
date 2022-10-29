@@ -9,7 +9,7 @@
 #include <iostream>
 
 namespace message{
-    using ZLIB::Message;
+    using SERIAL::Message;
 
     int test() {
         Message message{"hello world"};

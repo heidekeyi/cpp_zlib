@@ -1,24 +1,22 @@
 //
-// Created by 1213173752 on 2022/10/28.
+// Created by 1213173752 on 2022/10/20.
 //
 
 #ifndef SERIAL_MESSAGE_H
 #define SERIAL_MESSAGE_H
 
 #include <exception>
-#include <string>
 #include <ostream>
 
 namespace SERIAL {
     class Message : public std::exception {
     public:
-        explicit Message(std::string s);
+        explicit Message(const char *msg);
 
-    public:
         [[nodiscard]] const char *what() const noexcept override;
 
     private:
-        std::string m_message;
+        const char *m_message;
     };
 
     std::ostream &operator<<(std::ostream &os, const Message &o);

@@ -1,17 +1,15 @@
 //
-// Created by 1213173752 on 2022/10/28.
+// Created by 1213173752 on 2022/10/20.
 //
 
 #include "message.h"
 
-#include <utility>
-
 namespace SERIAL {
-    Message::Message(std::string s)
-            : m_message{std::move(s)} {}
+    Message::Message(const char *msg)
+            : m_message{msg} {}
 
     const char *Message::what() const noexcept {
-        return m_message.c_str();
+        return m_message;
     }
 
     std::ostream &operator<<(std::ostream &os, const Message &o) {
@@ -19,3 +17,4 @@ namespace SERIAL {
         return os;
     }
 }
+

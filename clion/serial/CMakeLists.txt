@@ -5,10 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(serial
         main.cpp
-        decimal.cpp decimal.h
-        symbols.cpp symbols.h
-        serial.cpp serial.h
-        message.cpp message.h driver_symbols.h
-
-
-        operand.cpp operand.h value.cpp value.h formula.cpp formula.h driver_value.h driver_formula.h driver_message.h driver_operand.h action.cpp action.h driver_action.h)
+        message.h message.cpp message_driver.h
+        symbols.h symbols_driver.h
+        value.h value_driver.h
+        serial.h
+        )

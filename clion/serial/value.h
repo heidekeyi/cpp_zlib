@@ -1,40 +1,66 @@
 //
-// Created by 1213173752 on 2022/10/22.
+// Created by 1213173752 on 2022/10/29.
 //
 
 #ifndef SERIAL_VALUE_H
 #define SERIAL_VALUE_H
 
-#include <vector>
 #include "symbols.h"
+#include <vector>
+#include <string>
+#include <ostream>
 
-namespace ZLIB {
+namespace SERIAL {
+    template<Pointer ptr>
     class Value {
     public:
-        explicit Value(Symbols symbols);
+        Value() { value(std::vector<char>{}); }
 
-        Value(const std::vector<char> &value, Symbols symbols);
+        explicit Value(const std::string &s) { value(s); }
+
+        explicit Value(const std::vector<char> &s) { value(s); }
 
     public:
-        [[nodiscard]] std::vector<char> value() const;
+        [[nodiscard]] const std::vector<char> &value() const { return m_value; }
 
-        void value(const std::vector<char> &v);
+        Value<ptr> &value(const std::vector<char> &s);
 
-        const char &operator[](size_t pos) const;
-
-        char &operator[](size_t pos);
-
-    private:
-        void range(size_t index) const;
-
-        void init(const std::vector<char> &v);
+        Value<ptr> &value(const std::string &s);
 
     private:
         std::vector<char> m_value;
-        Symbols m_symbols;
     };
 
-    std::ostream &operator<<(std::ostream &os, const Value &o);
+    template<Pointer ptr>
+    Value<ptr> &Value<ptr>::value(const std::vector<char> &s) {
+        Symbols<ptr> symbols{};
+        for (auto ch: s) {
+            if (symbols.find(ch) < 0) {
+                throw Message{"value has unexpect char"};
+            }
+        }
+        if (s.empty()) {
+            m_value = {symbols.symbols()[0]};
+        } else {
+            m_value = s;
+        }
+        return *this;
+    }
+
+    template<Pointer ptr>
+    Value<ptr> &Value<ptr>::value(const std::string &s) {
+        return value(std::vector<char>(s.begin(), s.end()));
+    }
+
+    template<Pointer ptr>
+    std::ostream &operator<<(std::ostream &os, const Value<ptr> &o) {
+        auto v = o.value();
+        auto index = v.size();
+        while (index > 0) {
+            os << v[--index];
+        }
+        return os;
+    }
 }
 
 #endif //SERIAL_VALUE_H
