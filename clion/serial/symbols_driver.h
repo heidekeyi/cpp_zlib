@@ -26,23 +26,24 @@ namespace SYMBOLS {
 
     int test() {
         try {
-            Symbols<empty> symbols{};
+            Symbols symbols{empty};
         } catch (const Message &m) {
             std::cout << "1st: " << m << std::endl;
         }
         try {
-            Symbols<one> symbols{};
+            Symbols symbols{one};
         } catch (const Message &m) {
-            std::cout << "2ed: " << m << std::endl;
+            std::cout << "2nd: " << m << std::endl;
         }
         try {
-            Symbols<repeat> symbols{};
+            Symbols symbols{repeat};
         } catch (const Message &m) {
             std::cout << "3rd: " << m << std::endl;
         }
-        Symbols<POINTER::hex> symbols{};
+        Symbols symbols{SYMBOLS::SYMBOLS_CALLBACK::hex};
         std::cout << "4th: " << symbols
                   << "\n5th: " << symbols.find('9')
+                  << "\n6th: " << symbols.find('.')
                   << std::endl;
         return 0;
     }

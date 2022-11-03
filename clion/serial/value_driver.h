@@ -10,17 +10,18 @@
 
 namespace VALUE {
     using namespace SERIAL;
-    using Dec = Value<POINTER::dec>;
 
     int test() {
+        auto fn = SYMBOLS_CALLBACK::dec;
         try {
-            Dec dec{"a"};
+            Value v(fn, std::string{"a"});
         } catch (const Message &m) {
             std::cout << "1st: " << m << std::endl;
         }
-        Dec dec{};
-        std::cout << "2ed: " << dec
-                  << "\n3rd: " << dec.value("9002")
+        Value v{fn};
+        std::cout << "2ed: " << v
+                  << "\n3rd: " << v.value("2009")
+                  << "\n4th: " << v.value("2009", false)
                   << std::endl;
         return 0;
     }
