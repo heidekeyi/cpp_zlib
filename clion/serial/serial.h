@@ -35,7 +35,7 @@ namespace SERIAL {
 
         Serial operator+(const Serial &rhs) const;
 
-        Serial operator*(const Serial &rhs) const { return mul(rhs.m_value); }
+        Serial operator*(const Serial &rhs) const;
 
     private:
         Value m_value;
@@ -47,15 +47,10 @@ namespace SERIAL {
                  size_t pos,
                  const std::vector<Value> &table) const;
 
-        Serial mul(const Value &rhs) const;
+        void mul(std::vector<char> &dest, const std::vector<char> &src) const;
 
         [[nodiscard]] size_t find(const std::vector<Value> &vec, char lhs, char rhs) const;
     };
-
-    template<CALLBACK callback>
-    Serial<callback> Serial<callback>::mul(const Value &rhs) const {
-        return Serial();
-    }
 
     template<CALLBACK callback>
     size_t Serial<callback>::find(const std::vector<Value> &vec, char lhs, char rhs) const {
@@ -72,10 +67,18 @@ namespace SERIAL {
     }
 
     template<CALLBACK callback>
+    Serial<callback> Serial<callback>::operator+(const Serial &rhs) const {
+        auto dest = rhs.m_value.value();
+        add(dest, m_value.value(), 0, Table{m_callback}.retrieve_table_addition());
+        return Serial{dest, false};
+    }
+
+    template<CALLBACK callback>
     void Serial<callback>::add(std::vector<char> &dest,
                                const std::vector<char> &src,
                                size_t pos,
-                               const std::vector<Value> &table) const {
+                               const std::vector<Value> &table
+    ) const {
         while (pos < dest.size() && pos < src.size()) {
             auto index = find(table, dest[pos], src[pos]);
             auto v = table[index].value(pos);
@@ -90,17 +93,33 @@ namespace SERIAL {
     }
 
     template<CALLBACK callback>
-    Serial<callback> Serial<callback>::operator+(const Serial &rhs) const {
+    Serial<callback> Serial<callback>::operator*(const Serial &rhs) const {
         auto dest = rhs.m_value.value();
-        add(dest, m_value.value(), 0, Table{m_callback}.retrieve_table_addition());
+        mul(dest, m_value.value());
         return Serial{dest, false};
+    }
+
+    template<CALLBACK callback>
+    void Serial<callback>::mul(std::vector<char> &dest, const std::vector<char> &src) const {
+        const auto table_mul = Table{callback}.retrieve_table_multiplication();
+        std::vector<std::vector<char>> v;
+        for (size_t i = 0; i < dest.size(); ++i) {
+            for (size_t j = 0; j < src.size(); ++j) {
+                auto index = find(table_mul, dest[i], src[j]);
+                v.push_back(table_mul[index].value(i + j));
+            }
+        }
+        dest = v[0];
+        const auto table_add = Table{callback}.retrieve_table_addition();
+        for (size_t i = 1; i < v.size(); ++i) {
+            add(dest, v[i], 0, table_add);
+        }
     }
 
     template<CALLBACK callback>
     std::ostream &operator<<(std::ostream &os, const Serial<callback> &o) {
         return os << o.value();
     }
-
 }
 
 #endif //SERIAL_SERIAL_H
